@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card mt-3">
+					<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+					  <p th:text="${session.message.content}"></p>
+					  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+					</div>
+						<div class="text-center">
+							<img alt="" width="100" th:src="@{/img/register.png}">
+						</div>
+						<h1 class="text-center">SignUp Here</h1>
+						<form th:action="@{/do_register}" method="post"
+							th:object="${user}">
+							<div class="form-group">
+								<label for="name">Your Name</label> <input type="text"
+									th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+									class="form-control" id="name" name="name" aria-describedby="name"
+									placeholder="Enter your Name" th:value="${user.name}">
+								<div  th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
+							</div>
+							<div class="form-group">
+								<label for="email">Your Email</label> <input type="email"
+									class="form-control" id="email" name="email" aria-describedby="email"
+									placeholder="Enter your Email" th:value="${user.email}">
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label> <input type="password"
+									class="form-control" id="password" name="password" aria-describedby="password"
+									placeholder="Enter your Password" th:value="${user.password}">
+							</div>
+							<div class="form-group">
+								<label for="About">About</label>
+								<textarea class="form-control" rows="5" name="about" th:text="${user.about}"></textarea>
+							</div>
+							<div class="form-group form-check">
+								<input type="checkbox" name="agreement" class="form-check-input"
+									id="agreement"> <label for="agreement">Accept
+									Terms & condition</label>
+							</div>
+							<div class="container text-center">
+								<button class="btn bg-primary btn-block text-white"
+									type="submit">SUBMIT</button>
+								<button class="btn btn-warning btn-block text-white"
+									type="reset">RESET</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
